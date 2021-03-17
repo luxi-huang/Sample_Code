@@ -1,0 +1,44 @@
+<launch>
+
+  <arg name="robot" default='0'/>
+  <include file="$(find nuturtle_robot)/launch/basic_remote.launch">
+        <arg name="robot" value="$(arg robot)" />
+  </include>
+
+  <node  machine="turtlebot" name="turtle_interface" pkg="nuturtle_robot" type="turtle_interface" output="screen">
+  </node>
+
+  <node machine="turtlebot" name="rotation" pkg="nuturtle_robot" type="rotation" output="screen">
+  </node>
+
+  <node name="fake_diff_encoders" pkg="rigid2d" type="fake_diff_encoders" output="screen">
+    <remap from="joint_states" to="fake/joint_states"/>
+  </node>
+
+  <node name="fake_odometer" pkg="rigid2d" type="odometer" output="screen">
+    <remap from="joint_state" to="fake/joint_states"/>
+    <remap from="odom" to="fake/odom"/>
+    <param name="~body_frame_id_" type="str" value="fake_base_link" />
+    <param name="~odom_frame_id_" type="str" value="fake_odom" />
+  </node>
+
+  <node machine="turtlebot" name="odometer" pkg="rigid2d" type="odometer" output="screen">
+    <param name="~body_frame_id_" type="str" value="base_link" />
+    <param name="~odom_frame_id_" type="str" value="odom" />
+  </node>
+
+  <param name="robot_description"
+       command="$(find xacro)/xacro $(find nuturtle_description)/urdf/diff_drive.urdf.xacro"/>
+  <rosparam command="load" file="$(find nuturtle_description)/config/diff_params.yaml" /> 
+
+
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 odom_frame_id fake_odom_frame_id" />
+
+  <node machine="turtlebot" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <group if="$(eval arg('robot') != 0)">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find nuturtle_robot)/config/config.rviz" />
+  </group>
+  
+</launch>

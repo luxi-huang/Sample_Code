@@ -1,0 +1,6 @@
+- git:
+    local-name: nuturtlebot
+    uri: https://github.com/ME495-Navigation/nuturtlebot.git
+- git:
+    local-name: turtlebot3_Navigation
+    uri: https://github.com/luxi-huang/Turtulebot3-Navigation.git
