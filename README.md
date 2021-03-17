@@ -39,16 +39,23 @@ ROS Melodic
   
 ### Option 2: 
 1. create catkin_ws 
-   ```
+  
+ ```
   $ mkdir -p ~/catkin_ws/src 
   $ cd ~/catkin_ws/src
-  ```
+```
 2. clone all packages 
-   ```
-   git clone https://github.com/luxi-huang/Turtulebot3-Navigation.git
-   git clone https://github.com/ME495-Navigation/nuturtlebot.git
-  ```
+   
+```
+  $ git clone https://github.com/luxi-huang/Turtulebot3-Navigation.git
+  $ git clone https://github.com/ME495-Navigation/nuturtlebot.git
+```
+
 3. catkin_make 
+```
+$ catkin_make
+```
 
 ### How to run file:
-# visit
+
+[visit tsim package](https://github.com/luxi-huang/Sample_Code/tree/master/tsim) 
